@@ -1,0 +1,21 @@
+project_name: gitprompt
+builds:
+  - main: ./cmd/gitprompt
+    binary: gitprompt
+    ldflags: -s -w -X "main.version={{.Version}}" -X "main.commit={{.Commit}}" -X "main.date={{.Date}}" -X "main.goversion={{.Env.GOVERSION}}"
+    env:
+    - CGO_ENABLED=0
+archive:
+  format: tar.gz
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+git:
+  short_hash: true

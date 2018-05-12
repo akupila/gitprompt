@@ -1,25 +1,24 @@
-version: 2
+defaults: &defaults
+  docker:
+    - image: golang:1.10
+  working_directory: /go/src/github.com/akupila/gitprompt
+
 jobs:
   build:
-    docker:
-      - image: golang:1.10
-    working_directory: /go/src/github.com/akupila/gitprompt
+    <<: *defaults
     steps:
       - checkout
-
       - run:
           name: Install gometalinter
           command: |
             go get github.com/alecthomas/gometalinter
             gometalinter --install
-
       - run:
           name: Run gometalinter
           environment:
             CGO_ENABLED: 0
           command: |
             gometalinter ./...
-
       - run:
           name: Test
           command: |
@@ -28,10 +27,52 @@ jobs:
             git config --global user.name "Test"
             bash scripts/test.sh
             bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
-
       - run:
           name: Build
           environment:
             CGO_ENABLED: 0
           command: |
             go build -ldflags="-s -w" -o /out/gitprompt ./cmd/gitprompt
+      - persist_to_workspace:
+          root: .
+          paths: .
+  release:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/akupila/gitprompt
+      - run:
+          name: Install goreleaser
+          command: |
+            go get github.com/goreleaser/goreleaser
+      - run:
+          name: Release
+          command: |
+            GOVERSION=$(go version) goreleaser
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              ignore: /^v[0-9]+(\.[0-9]+)*/
+  build-and-release:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*/
+      - release:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*/
