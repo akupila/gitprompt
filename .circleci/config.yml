@@ -26,7 +26,8 @@ jobs:
             git --version
             git config --global user.email "test@test.com"
             git config --global user.name "Test"
-            go test ./... -cover
+            bash scripts/test.sh
+            bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
 
       - run:
           name: Build
