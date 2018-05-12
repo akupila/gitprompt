@@ -1,0 +1,37 @@
+{
+  "DisableAll": true,
+  "Enable": [
+    "deadcode",
+    "errcheck",
+    "goconst",
+    "gocyclo",
+    "golint",
+    "gotype",
+    "ineffassign",
+    "interfacer",
+    "megacheck",
+    "misspell",
+    "staticcheck",
+    "unconvert",
+    "vet",
+    "vetshadow"
+  ],
+  "Skip": [
+    "funcpb",
+    "state/statepb"
+  ],
+  "Exclude": [
+    "/usr/local/go/src",
+    "/usr/local/Cellar",
+    "/go/src"
+  ],
+  "Deadline": "2m",
+  "Vendor": true,
+  "Cyclo": 20,
+  "Sort": [
+    "linter",
+    "severity",
+    "path",
+    "line"
+  ]
+}

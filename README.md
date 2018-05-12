@@ -1,5 +1,8 @@
 # gitprompt
 
+[![CircleCI](https://circleci.com/gh/akupila/gitprompt.svg?style=svg)](https://circleci.com/gh/akupila/gitprompt)
+[![goreportcard](https://goreportcard.com/badge/github.com/akupila/gitprompt)](https://goreportcard.com/report/github.com/akupila/gitprompt)
+
 gitprompt is a configurable, fast and zero-dependencies* way of getting the
 current git status to be displayed in the `PROMPT`.
 

@@ -16,7 +16,7 @@ func Parse() (*GitStatus, error) {
 
 	stat, err := runGitCommand("git", "status", "--branch", "--porcelain=2")
 	if err != nil {
-		if strings.HasPrefix(err.Error(), "fatal: not a git repository") {
+		if strings.HasPrefix(err.Error(), "fatal:") {
 			return nil, nil
 		}
 		return nil, err
@@ -31,7 +31,7 @@ func Parse() (*GitStatus, error) {
 			status.Untracked++
 		case 'u':
 			status.Conflicts++
-		case '1':
+		case '1', '2':
 			parts := strings.Split(line, " ")
 			if parts[1][0] != '.' {
 				status.Staged++

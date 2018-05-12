@@ -174,7 +174,7 @@ func TestParseHead(t *testing.T) {
 
 	setupCommands(t, dir, `
 		git commit --allow-empty -m 'second'
-		git checkout head^
+		git checkout HEAD^
 	`)
 	s, _ = Parse()
 	assertString(t, "branch", "", s.Branch)
@@ -200,7 +200,7 @@ func setupTestDir(t *testing.T) (string, func()) {
 		t.Fatalf("Create temp dir: %v", err)
 	}
 
-	if err := os.Chdir(dir); err != nil {
+	if err = os.Chdir(dir); err != nil {
 		t.Fatalf("Could not change dir: %v", err)
 	}
 

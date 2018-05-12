@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: golang:1.10
+    working_directory: /go/src/github.com/akupila/gitprompt
+    steps:
+      - checkout
+
+      - run:
+          name: Install gometalinter
+          command: |
+            go get github.com/alecthomas/gometalinter
+            gometalinter --install
+
+      - run:
+          name: Run gometalinter
+          environment:
+            CGO_ENABLED: 0
+          command: |
+            gometalinter ./...
+
+      - run:
+          name: Test
+          command: |
+            git --version
+            git config --global user.email "test@test.com"
+            git config --global user.name "Test"
+            go test ./... -cover
+
+      - run:
+          name: Build
+          environment:
+            CGO_ENABLED: 0
+          command: |
+            go build -ldflags="-s -w" -o /out/gitprompt ./cmd/gitprompt

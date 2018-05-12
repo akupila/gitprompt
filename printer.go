@@ -3,6 +3,8 @@ package gitprompt
 import (
 	"bufio"
 	"bytes"
+	"io"
+	"log"
 	"strconv"
 	"strings"
 	"unicode"
@@ -258,11 +260,13 @@ func setData(g *group, s *GitStatus, ch rune) {
 	}
 }
 
-func (g *group) writeTo(b *bytes.Buffer) bool {
+func (g *group) writeTo(b io.Writer) bool {
 	if g.hasData && !g.hasValue {
 		return false
 	}
-	g.buf.WriteTo(b)
+	if _, err := g.buf.WriteTo(b); err != nil {
+		log.Panic(err)
+	}
 	return true
 }
 
