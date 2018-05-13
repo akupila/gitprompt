@@ -160,28 +160,75 @@ gitprompt -format="#B(@b#R%h[#y >%s][#m ↓%b ↑%a][#r x%c][#g +%m][#y ϟ%u]#B)
 - `)` in highlight blue
 - _any text printed after gitprompt will have all formatting cleared_
 
-## Download
+## Installation
 
-### MacOS
+Installation consists of two parts: get the binary & configure your shell to
+use it.
 
-Install [Homebrew]
+### Get binary
 
-`TODO(akupila): brew cask`
+<details>
+<summary>Homebrew</summary>
+<br/>
+<pre>
+$ brew tap akupila/gitprompt
+$ brew install gitprompt
+</pre>
+</details
 
-## Configure your shell
+<details>
+<summary>Install binary directly</summary>
+<br/>
+<pre>
+$ curl -sfL https://install.goreleaser.com/github.com/akupila/gitprompt.sh | bash -s -- -b /usr/local/bin
+</pre>
+<p>
+Feel free to change the path from <code>/usr/local/bin</code>, just make sure
+<code>gitprompt</code> is available on your <code>$PATH</code> (check with
+<code>gitprompt -version</code>).
+</p>
+</details>
 
-### zsh
+<details>
+<summary>Build from source</summary>
+<br/>
+<pre>
+$ go get github.com/akupila/gitprompt/...
+</pre>
+<p>
+The code has no vendored dependencies so no need to worry about that.
+</p>
+</details>
 
-gitprompt needs to execute as a part the `PROMPT`, add this to your `~/.zshrc`:
+### Configure your shell
+
+#### zsh
+
+Add this to your `~/.zshrc`:
 
 ```
 PROMPT='$(gitprompt)'
 ```
 
-Now reload the config (`source ~/.zshrc`) and gitprompt should show up. Of
-course you're free to add anything else here too, just execute `gitprompt`
-where you want the status.
+Now reload the config (`source ~/.zshrc`) and gitprompt should show up. Feel
+free to add anything else here too, just execute `gitprompt` where you want the
+status, for example:
 
+```
+local ret_status="%(?:%{$fg_bold[green]%}$:%{$fg_bold[red]%}$)"
+local dir="%{$fg[cyan]%}%3d"
+PROMPT='${ret_status} ${dir} $(gitprompt)'
+```
 
+#### Bash
 
-[Homebrew]: https://brew.sh/
+Add this to your `~/.bashrc`:
+
+```
+PS1='$(gitprompt)'
+```
+
+### Uninstallation
+
+1. Remove `gitprompt` from your shell config
+2. Delete the binary `rm $(which gitprompt)`

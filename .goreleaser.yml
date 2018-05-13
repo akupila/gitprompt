@@ -19,3 +19,10 @@ changelog:
     - '^test:'
 git:
   short_hash: true
+brew:
+  github:
+    owner: akupila
+    name: homebrew-gitprompt
+  name: gitprompt
+  homepage: https://github.com/akupila/gitprompt
+  description: "git status in the prompt"
