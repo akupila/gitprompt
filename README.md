@@ -174,7 +174,7 @@ use it.
 $ brew tap akupila/gitprompt
 $ brew install gitprompt
 </pre>
-</details
+</details>
 
 <details>
 <summary>Install binary directly</summary>
