@@ -16,7 +16,7 @@ var (
 	goversion = "unknown"
 )
 
-const defaultFormat = "#B([@b#R%h][#y ›%s][#m ↓%b][#m ↑%a][#r x%c][#g +%m][#y %u]#B)"
+const defaultFormat = "#B([@b#R%h][#y ›%s][#m ↓%b][#m ↑%a][#r x%c][#g +%m][#y %u]#B) "
 
 type formatFlag struct {
 	set   bool
