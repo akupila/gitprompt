@@ -30,11 +30,11 @@ variable. If both are set, the flag takes precedence.
 A very bare-bones format can look like this:
 
 ```
-gitprompt -format="%h >%s ↓%b ↑%a @%c +%m %u"
+gitprompt -format="%h >%s ↓%b ↑%a @%c +%m %u "
 
 # or
 
-export GITPROMPT_FORMAT="%h >%s ↓%b ↑%a @%c +%m %u"
+export GITPROMPT_FORMAT="%h >%s ↓%b ↑%a @%c +%m %u "
 gitprompt
 ```
 
@@ -125,29 +125,28 @@ spacing should be added when the group is present, the spacing should be added
 to the group itself.
 
 Colors and attributes are also scoped to a group, meaning they won't leak
-outside so there's no need to reset colors:
+outside so there's no need to reset colors. This prints `behind` in red, `-`
+without any formatting, and `ahead` in green:
 
 ```
 [#r behind: %b] - [#g ahead: %a]
 ```
 
-This prints `behind` in red, `-` without any formatting, and `ahead` in green.
+A group requires one data token to have a non-zero value. The following prints
+the current branch/sha1 in cyan, then number of staged files (if not zero),
+then commits behind and ahead (if both are not zero). This allows for symmetry,
+if it's desired to show `master >1 ↓0 ↑2` instead of `master >1 ↑2`:
 
 ```
 #c%h[ >%s][ ↓%b ↑%a]
 ```
-
-This prints the current branch/sha1 in cyan, then number of staged files (if
-not zero), then commits behind and ahead (if both are not zero). This allows
-for symmetry, if it's desired to show `master >1 ↓0 ↑2` instead of `master >1
-↑2`.
 
 ### Complete example
 
 Putting everything together, a complex format may look something like this:
 
 ```
-gitprompt -format="#B(@b#R%h[#y >%s][#m ↓%b ↑%a][#r x%c][#g +%m][#y ϟ%u]#B)"
+gitprompt -format="#B(@b#R%h[#y >%s][#m ↓%b ↑%a][#r x%c][#g +%m][#y ϟ%u]#B) "
 ```
 
 - `(` in highlight blue
@@ -158,7 +157,8 @@ gitprompt -format="#B(@b#R%h[#y >%s][#m ↓%b ↑%a][#r x%c][#g +%m][#y ϟ%u]#B)
 - If files have been modified since the previous commit, show `+3` for 3 modified files
 - If files are untracked (added since last commit), show a lightning and the number in yellow
 - `)` in highlight blue
-- _any text printed after gitprompt will have all formatting cleared_
+
+> Any text printed after gitprompt will have all formatting cleared
 
 ## Installation
 
@@ -167,47 +167,42 @@ use it.
 
 ### Get binary
 
-<details>
-<summary>Homebrew</summary>
-<br/>
-<pre>
+#### Homebrew
+
+Ensure you have [Homebrew] installed.
+
+```
 $ brew tap akupila/gitprompt
 $ brew install gitprompt
-</pre>
-</details>
+```
 
-<details>
-<summary>Install binary directly</summary>
-<br/>
-<pre>
+#### Install binary directly
+
+```
 $ curl -sfL https://install.goreleaser.com/github.com/akupila/gitprompt.sh | bash -s -- -b /usr/local/bin
-</pre>
-<p>
-Feel free to change the path from <code>/usr/local/bin</code>, just make sure
-<code>gitprompt</code> is available on your <code>$PATH</code> (check with
-<code>gitprompt -version</code>).
-</p>
-</details>
+```
 
-<details>
-<summary>Build from source</summary>
-<br/>
-<pre>
+Feel free to change the path from `/usr/local/bin`, just make sure `gitprompt`
+is available on your `$PATH` (check with `gitprompt -version`).
+
+#### Build from source
+
+Install the go toolchain: https://golang.org/doc/install
+
+```
 $ go get github.com/akupila/gitprompt/...
-</pre>
-<p>
+```
+
 The code has no vendored dependencies so no need to worry about that.
-</p>
-</details>
 
 ### Configure your shell
 
 #### zsh
 
-Add this to your `~/.zshrc`:
+Execute `gitprompt` as part of `PROMPT`. Add this to your  `~/.zshrc`:
 
 ```
-PROMPT='$(gitprompt)'
+export PROMPT='$PROMPT $(gitprompt)'
 ```
 
 Now reload the config (`source ~/.zshrc`) and gitprompt should show up. Feel
@@ -217,18 +212,33 @@ status, for example:
 ```
 local ret_status="%(?:%{$fg_bold[green]%}$:%{$fg_bold[red]%}$)"
 local dir="%{$fg[cyan]%}%3d"
-PROMPT='${ret_status} ${dir} $(gitprompt)'
+export PROMPT='${ret_status} ${dir} $(gitprompt)'
 ```
 
-#### Bash
+Alternatively, you can add this to `RPROMPT` instead, which will make the
+status appear on the right hand side of the screen. `gitprompt` will by default
+add a trailing space so you you may want to customize the formatting if you
+don't want a trailing space here.
 
-Add this to your `~/.bashrc`:
+#### bash
+
+Set `PS1` in your `~/.bashrc` and reload the config (`source ~/.bashrc`).
+
+For example:
 
 ```
-PS1='$(gitprompt)'
+export PS1='$PS1 $(gitprompt)'
 ```
+
+See [bashrcgenerator] for more, just add `$(gitprompt)` where you want the git
+status to appear.
 
 ### Uninstallation
 
 1. Remove `gitprompt` from your shell config
-2. Delete the binary `rm $(which gitprompt)`
+2. Delete the binary `rm $(which gitprompt)` or `brew uninstall gitprompt`
+
+
+
+[Homebrew]: https://brew.sh/
+[bashrcgenerator]: http://bashrcgenerator.com/
