@@ -195,14 +195,14 @@ $ brew install gitprompt
 $ curl -sfL https://install.goreleaser.com/github.com/akupila/gitprompt.sh | bash -s -- -b /usr/local/bin
 ```
 
+Feel free to change the path from `/usr/local/bin`, just make sure `gitprompt`
+is available on your `$PATH` (check with `gitprompt -version`).
+
 ##### Linux
 
 ```
-$ curl -sfL https://install.goreleaser.com/github.com/akupila/gitprompt.sh | bash -s -- -b /tmp && sudo install /tmp/gitprompt /usr/local/bin
+$ curl -sfL https://install.goreleaser.com/github.com/akupila/gitprompt.sh | sudo bash -s -- -b /usr/local/bin
 ```
-
-Feel free to change the path from `/usr/local/bin`, just make sure `gitprompt`
-is available on your `$PATH` (check with `gitprompt -version`).
 
 #### Build from source
 
