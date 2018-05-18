@@ -230,7 +230,7 @@ status, for example _(this was used for taking the screenshots in the readme)_:
 
 ```
 local ret_status="%(?:%{$fg_bold[green]%}›:%{$fg_bold[red]%}›)"
-local dir="%{$fg[cyan]%}%3d"
+local dir="%{$fg[cyan]%}%3d%{$reset_color%}"
 export PROMPT='${ret_status} ${dir} $(gitprompt)'
 ```
 
