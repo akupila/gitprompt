@@ -7,6 +7,17 @@
 gitprompt is a configurable, fast and zero-dependencies* way of getting the
 current git status to be displayed in the `PROMPT`.
 
+On master without changes:
+
+![gitprompt on master](./screenshot1.png)
+
+On branch `feature/awesome` with one staged file, one commit ahead origin and
+two modified files:
+
+![gitprompt with changes](./screenshot2.png)
+
+_The format is fully customizable, see more below!_
+
 Displays:
 
 - Current branch / sha1
@@ -207,10 +218,10 @@ export PROMPT='$PROMPT $(gitprompt)'
 
 Now reload the config (`source ~/.zshrc`) and gitprompt should show up. Feel
 free to add anything else here too, just execute `gitprompt` where you want the
-status, for example:
+status, for example _(this was used for taking the screenshots in the readme)_:
 
 ```
-local ret_status="%(?:%{$fg_bold[green]%}$:%{$fg_bold[red]%}$)"
+local ret_status="%(?:%{$fg_bold[green]%}›:%{$fg_bold[red]%}›)"
 local dir="%{$fg[cyan]%}%3d"
 export PROMPT='${ret_status} ${dir} $(gitprompt)'
 ```
