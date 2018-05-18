@@ -189,8 +189,16 @@ $ brew install gitprompt
 
 #### Install binary directly
 
+##### MacOS
+
 ```
 $ curl -sfL https://install.goreleaser.com/github.com/akupila/gitprompt.sh | bash -s -- -b /usr/local/bin
+```
+
+##### Linux
+
+```
+$ curl -sfL https://install.goreleaser.com/github.com/akupila/gitprompt.sh | bash -s -- -b /tmp && sudo install /tmp/gitprompt /usr/local/bin
 ```
 
 Feel free to change the path from `/usr/local/bin`, just make sure `gitprompt`
