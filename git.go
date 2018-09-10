@@ -21,12 +21,15 @@ type GitStatus struct {
 // data according to the format.
 // Exits with a non-zero exit code in case git returned an error. Exits with a
 // blank string if the current directory is not part of a git repository.
-func Exec(format string) {
+func Exec(format string, printZSH bool) {
 	s, err := Parse()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	out := Print(s, format)
-	fmt.Fprintf(os.Stdout, out)
+	out, num := Print(s, format)
+	fmt.Fprint(os.Stdout, out)
+	if printZSH {
+		fmt.Fprintf(os.Stdout, "%%%dG", num)
+	}
 }
