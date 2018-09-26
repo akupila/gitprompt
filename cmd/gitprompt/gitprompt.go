@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/akupila/gitprompt"
 )
@@ -55,8 +54,8 @@ var exampleStatus = &gitprompt.GitStatus{
 }
 
 var formatHelp = func() string {
-	return strings.TrimSpace(fmt.Sprintf(`
-Define output format.
+	example, _ := gitprompt.Print(exampleStatus, defaultFormat)
+	return fmt.Sprintf(`Define output format.
 
 Default format is: %q
 Example result:    %s
@@ -94,12 +93,12 @@ Text attributes:
 	@f	Set faint/dim color
 	@F	Clear faint/dim color
 	@i	Set italic
-	@I	Clear italic
-`, defaultFormat, gitprompt.Print(exampleStatus, defaultFormat)))
+	@I	Clear italic`, defaultFormat, example)
 }
 
 func main() {
 	v := flag.Bool("version", false, "Print version inforformation.")
+	zsh := flag.Bool("zsh", false, "Print zsh width control characters")
 	flag.Var(&format, "format", formatHelp())
 	flag.Parse()
 
@@ -111,5 +110,14 @@ func main() {
 		os.Exit(0)
 	}
 
-	gitprompt.Exec(format.String())
+	s, err := gitprompt.Parse()
+	if err != nil {
+		_, _ = fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	out, num := gitprompt.Print(s, format.String())
+	_, _ = fmt.Fprint(os.Stdout, out)
+	if *zsh {
+		_, _ = fmt.Fprintf(os.Stdout, "%%%dG", num)
+	}
 }

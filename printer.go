@@ -69,12 +69,15 @@ type group struct {
 
 	hasData  bool
 	hasValue bool
+	width    int
 }
 
 // Print prints the status according to the format.
-func Print(s *GitStatus, format string) string {
+//
+// The integer returned is the print width of the string.
+func Print(s *GitStatus, format string) (string, int) {
 	if s == nil {
-		return ""
+		return "", 0
 	}
 
 	in := make(chan rune)
@@ -93,7 +96,7 @@ func Print(s *GitStatus, format string) string {
 	return buildOutput(s, in)
 }
 
-func buildOutput(s *GitStatus, in chan rune) string {
+func buildOutput(s *GitStatus, in chan rune) (string, int) {
 	root := &group{}
 	g := root
 
@@ -148,6 +151,7 @@ func buildOutput(s *GitStatus, in chan rune) string {
 				g.parent.format = g.format
 				g.parent.format.setColor(0)
 				g.parent.format.clearAttributes()
+				g.parent.width += g.width
 			}
 			g = g.parent
 		default:
@@ -170,7 +174,7 @@ func buildOutput(s *GitStatus, in chan rune) string {
 	g.format.clearAttributes()
 	g.format.printANSI(&g.buf)
 
-	return root.buf.String()
+	return root.buf.String(), root.width
 }
 
 func setColor(g *group, ch rune) {
@@ -274,15 +278,16 @@ func (g *group) addRune(r rune) {
 	if !unicode.IsSpace(r) {
 		g.format.printANSI(&g.buf)
 	}
+	g.width++
 	g.buf.WriteRune(r)
 }
 
 func (g *group) addString(s string) {
 	g.format.printANSI(&g.buf)
+	g.width += len(s)
 	g.buf.WriteString(s)
 }
 
 func (g *group) addInt(i int) {
-	g.format.printANSI(&g.buf)
-	g.buf.WriteString(strconv.Itoa(i))
+	g.addString(strconv.Itoa(i))
 }

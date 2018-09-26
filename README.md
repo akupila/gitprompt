@@ -221,18 +221,20 @@ The code has no vendored dependencies so no need to worry about that.
 Execute `gitprompt` as part of `PROMPT`. Add this to your  `~/.zshrc`:
 
 ```
-export PROMPT='$PROMPT $(gitprompt)'
+export PROMPT='$PROMPT %{$(gitprompt -zsh)%}'
 ```
+
+> The `-zsh` flag makes `gitprompt` output the correct width of visible
+> characters, which fixes counting ansi color codes (breaks wrapping).
 
 Now reload the config (`source ~/.zshrc`) and gitprompt should show up. Feel
 free to add anything else here too, just execute `gitprompt` where you want the
 status, for example _(this was used for taking the screenshots in the readme)_:
 
 ```
-local ret_status="%(?:%{$fg_bold[green]%}›:%{$fg_bold[red]%}›)"
-local dir="%{$fg[cyan]%}%3d%{$reset_color%}"
-export PROMPT='${ret_status} ${dir} $(gitprompt)'
+export PROMPT='%(?:%{$fg_bold[green]%}›:%{$fg_bold[red]%}›) %{$fg[cyan]%}%3d %{$(gitprompt -zsh)%}%{$reset_color%}'
 ```
+
 
 Alternatively, you can add this to `RPROMPT` instead, which will make the
 status appear on the right hand side of the screen. `gitprompt` will by default
