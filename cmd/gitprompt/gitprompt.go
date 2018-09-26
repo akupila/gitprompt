@@ -110,5 +110,14 @@ func main() {
 		os.Exit(0)
 	}
 
-	gitprompt.Exec(format.String(), *zsh)
+	s, err := gitprompt.Parse()
+	if err != nil {
+		_, _ = fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	out, num := gitprompt.Print(s, format.String())
+	_, _ = fmt.Fprint(os.Stdout, out)
+	if *zsh {
+		_, _ = fmt.Fprintf(os.Stdout, "%%%dG", num)
+	}
 }

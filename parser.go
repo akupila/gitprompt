@@ -9,6 +9,18 @@ import (
 	"strings"
 )
 
+// GitStatus is the parsed status for the current state in git.
+type GitStatus struct {
+	Sha       string
+	Branch    string
+	Untracked int
+	Modified  int
+	Staged    int
+	Conflicts int
+	Ahead     int
+	Behind    int
+}
+
 // Parse parses the status for the repository from git. Returns nil if the
 // current directory is not part of a git repository.
 func Parse() (*GitStatus, error) {
