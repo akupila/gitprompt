@@ -233,7 +233,9 @@ func setupRemote(t *testing.T, dir string) (string, func()) {
 func setupCommands(t *testing.T, dir, commands string) {
 	commands = "set -eo pipefail\n" + commands
 	script := path.Join(dir, "setup.sh")
-	ioutil.WriteFile(script, []byte(commands), 0644)
+	if err := ioutil.WriteFile(script, []byte(commands), 0644); err != nil {
+		t.Fatal(err)
+	}
 	cmd := exec.Command("bash", "setup.sh")
 	var stderr bytes.Buffer
 	var stdout bytes.Buffer

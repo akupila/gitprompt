@@ -9,16 +9,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install gometalinter
-          command: |
-            go get github.com/alecthomas/gometalinter
-            gometalinter --install
-      - run:
-          name: Run gometalinter
+          name: Install golangci-lint
           environment:
-            CGO_ENABLED: 0
+            GOLANGCI_LINT_TAG: v1.15.0
           command: |
-            gometalinter ./...
+            curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -d -b $GOPATH/bin $GOLANGCI_LINT_TAG
+      - run:
+          name: Lint
+          command: |
+            golangci-lint run ./... -v
       - run:
           name: Test
           command: |

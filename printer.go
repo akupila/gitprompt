@@ -12,12 +12,12 @@ import (
 
 const (
 	tAttribute rune = '@'
-	tColor          = '#'
-	tReset          = '_'
-	tData           = '%'
-	tGroupOp        = '['
-	tGroupCl        = ']'
-	tEsc            = '\\'
+	tColor     rune = '#'
+	tReset     rune = '_'
+	tData      rune = '%'
+	tGroupOp   rune = '['
+	tGroupCl   rune = ']'
+	tEsc       rune = '\\'
 )
 
 var attrs = map[rune]uint8{
@@ -53,12 +53,12 @@ var colors = map[rune]uint8{
 
 const (
 	head      rune = 'h'
-	untracked      = 'u'
-	modified       = 'm'
-	staged         = 's'
-	conflicts      = 'c'
-	ahead          = 'a'
-	behind         = 'b'
+	untracked rune = 'u'
+	modified  rune = 'm'
+	staged    rune = 's'
+	conflicts rune = 'c'
+	ahead     rune = 'a'
+	behind    rune = 'b'
 )
 
 type group struct {
