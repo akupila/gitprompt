@@ -2,7 +2,7 @@ project_name: gitprompt
 builds:
   - main: ./cmd/gitprompt
     binary: gitprompt
-    ldflags: -s -w -X "main.version={{.Version}}" -X "main.commit={{.Commit}}" -X "main.date={{.Date}}" -X "main.goversion={{.Env.GOVERSION}}"
+    ldflags: -s -w -X "main.version={{.Version}}" -X "main.commit={{.ShortCommit}}" -X "main.date={{.Date}}" -X "main.goversion={{.Env.GOVERSION}}"
     env:
     - CGO_ENABLED=0
 archive:
@@ -17,8 +17,6 @@ changelog:
     exclude:
     - '^docs:'
     - '^test:'
-git:
-  short_hash: true
 brew:
   github:
     owner: akupila
