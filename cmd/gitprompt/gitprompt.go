@@ -115,6 +115,9 @@ func main() {
 		_, _ = fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+	if s == nil {
+		return
+	}
 	out, num := gitprompt.Print(s, format.String())
 	_, _ = fmt.Fprint(os.Stdout, out)
 	if *zsh {
