@@ -58,7 +58,7 @@ Various data from git can be displayed in the output. Data tokens are prefixed
 with `%`:
 
 | token | explanation                       |
-|-------|-----------------------------------|
+| ----- | --------------------------------- |
 | `%h`  | Current branch or sha1            |
 | `%s`  | Number of files staged            |
 | `%b`  | Number of commits behind remote   |
@@ -76,7 +76,7 @@ sha1 are displayed.
 The color can be set with color tokens, prefixed with `#`:
 
 | token | color             |
-|-------|-------------------|
+| ----- | ----------------- |
 | `#k`  | Black             |
 | `#r`  | Red               |
 | `#g`  | Green             |
@@ -103,7 +103,7 @@ code at the end, meaning text after gitprompt won't have the color applied.
 The text attributes can be set with attribute tokens, prefixed with `@`:
 
 | token | attribute             |
-|-------|-----------------------|
+| ----- | --------------------- |
 | `@b`  | Set bold              |
 | `@B`  | Clear bold            |
 | `@f`  | Set faint/dim color   |
@@ -120,7 +120,7 @@ Groups can be used for adding logic to the format. A group's output is only
 printed if at least one item in the group has data.
 
 | token | action      |
-|-------|-------------|
+| ----- | ----------- |
 | `[`   | start group |
 | `]`   | end group   |
 
@@ -183,8 +183,7 @@ use it.
 Ensure you have [Homebrew] installed.
 
 ```
-$ brew tap akupila/gitprompt
-$ brew install gitprompt
+$ brew install akupila/gitprompt/gitprompt
 ```
 
 #### Install binary directly
