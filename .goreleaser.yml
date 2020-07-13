@@ -5,8 +5,9 @@ builds:
     ldflags: -s -w -X "main.version={{.Version}}" -X "main.commit={{.ShortCommit}}" -X "main.date={{.Date}}" -X "main.goversion={{.Env.GOVERSION}}"
     env:
     - CGO_ENABLED=0
-archive:
-  format: tar.gz
+archives:
+  - id: tarball
+    format: tar.gz
 checksum:
   name_template: 'checksums.txt'
 snapshot:
@@ -17,10 +18,10 @@ changelog:
     exclude:
     - '^docs:'
     - '^test:'
-brew:
-  github:
-    owner: akupila
-    name: homebrew-gitprompt
+brews:
+  - github:
+      owner: akupila
+      name: homebrew-gitprompt
   name: gitprompt
   homepage: https://github.com/akupila/gitprompt
   description: "git status in the prompt"
